@@ -10,10 +10,10 @@
 }
 
 .container{
-    
     background: linear-gradient(45deg, lightblue, blueviolet);
-    padding:15px 9%;
-    padding-bottom: 400;
+    padding: 50px 9%;
+    height: 100vh;
+    /* padding-bottom: 400; */
     /* BUG */
     
 }
@@ -31,6 +31,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
     gap: 15px;
+    padding-top: 50px;
 }
 
 .container .box-container .box{

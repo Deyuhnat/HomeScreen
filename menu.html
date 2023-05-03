@@ -1,74 +1,56 @@
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"content="width=device-width", initail-scale="1.0">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        
-        <link rel="stylesheet" href="menu.css">
 
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width" , initail-scale="1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <body>
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="Home.css">
+    <script src="menu.js" defer></script>
+</head>
 
-<div class="container">
-    <h1 class="heading">Services</h1>
+<body>
+    <div class="menu-bar">
+        <h1 class="logo">Dev<span>Service</span></h1>
+        <ul>
+          <li><a href="Home.html">Home</a></li>
+          <li><a href="menu.html">Service</a></li>
+          <li><a href="#">Pages <i class="fas fa-caret-down"></i></a>
+              <div class="dropdown-menu">
+                  <ul>
+                    <!-- <li><a href="#">""</a></li> -->
+                    <li>
+                      <a href="#">Community <i class="fas fa-caret-right"></i></a>
+                      
+                      <div class="dropdown-menu-1">
+                        <ul>
+                          <li><a href="#">Event</a></li>
+                          <li><a href="#">Discussion</a></li>
+                          <li><a href="#">Blog</a></li>
+                        </ul>
+                      </div>
+                    </li>
+                    <li><a href="#">FAQ</a></li>
+                  </ul>
+                </div>
+          </li>
+          <li><a href="#">Blog</a>
+          </li>
+          <li><a href="#">Contact us</a></li>
+        </ul>
+      </div>
+    <div class="container">
 
-    <div class="box-container">
+        <h1 class="heading">Services</h1>
+        <form id="service-form" action="">
+            <input type="text" id="search-input">
+            <button>Search</button>
+        </form>
 
-        <div class="box">
-            <img src="java.png" alt="">
-            <h3>Service 1</h3>
+        <div class="box-container">
 
-            <!-- Discribtion -->
-            <p></p>
-            <a href="#" class="btn">More infomation</a>
         </div>
+</body>
 
-        <div class="box">
-            <img src="c++.png" alt="">
-            <h3>Service 2</h3>
-
-            <!-- Discribtion -->
-            <p></p>
-            <a href="#" class="btn">More infomation</a>
-        </div>
-
-        <div class="box">
-            <img src="html.png" alt="">
-            <h3>Service 3</h3>
-
-            <!-- Discribtion -->
-            <p></p>
-            <a href="#" class="btn">More infomation</a>
-        </div>
-
-        <div class="box">
-            <img src="c++.png" alt="">
-            <h3>Service 4</h3>
-
-            <!-- Discribtion -->
-            <p></p>
-            <a href="#" class="btn">More infomation</a>
-        </div>
-
-        <div class="box">
-            <img src="python.jpg" alt="">
-            <h3>Service 5</h3>
-
-            <!-- Discribtion -->
-            <p></p>
-            <a href="#" class="btn">More infomation</a>
-        </div>
-
-        <div class="box">
-            <img src="ruby.png" alt="">
-            <h3>Service 6</h3>
-
-            <!-- Discribtion -->
-            <p></p>
-            <a href="#" class="btn">More infomation</a>
-        </div>
-
-</div>
-    </body>
 </html>

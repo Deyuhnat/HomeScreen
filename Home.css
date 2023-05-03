@@ -12,7 +12,7 @@
   }
   body {
     font-family: sans-serif;
-    background: url("dev.png");
+    background: url("./images/dev.png");
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -90,6 +90,6 @@
   }
   .hero {
     height: calc(100vh - 80px);
-    background-image: url(./bg.jpg);
+    background-image: url(.images/bg.jpg);
     background-position: center;
   }
