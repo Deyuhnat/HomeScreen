@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+</style>
+<body>
+<input id="page_filter_id" type="text" value="" placeholder="Filter">
+<select id="spinner_list_id">
+  <option value="Id">Id</option>
+  <option value="Name">Name</option>
+</select>
+<button onclick="goToPageWithFilter()">Go</button>
+
+<table id="users_table">
+
+</table>
+<div id="pageable_div_id"></div>
+
+<input id="page_number_id" type="number" value="1" placeholder="Go to page">
+<button onclick="goToPage()">Go</button>
+
+<script>
+  var pageSize = 10;
+  var previousPage, nextPage
+  getUsers();
+
+  function displayPageable(pageNumber, totalElement, totalPages) {
+    totalPages -= 1;
+    var previousButtonStatus = "";
+    var nextButtonStatus = "";
+
+    previousPage = pageNumber -1;
+    if (previousPage < 0) {
+      previousButtonStatus = "disabled";
+      previousPage = 0;
+    }
+    nextPage = pageNumber + 1;
+    if (nextPage > totalPages) {
+      nextButtonStatus = "disabled";
+      nextPage = totalPages;
+    }
+    var html = '<button id="previous_button_id" onclick="getUsers(previousPage)" ' + previousButtonStatus + '>Previous</button><button onclick="getUsers(nextPage)" ' + nextButtonStatus + '>Next</button>' +
+            '<br><span>'+ 'Page ' + (pageNumber+1) +' of ' + (totalPages+1) + '</span>';
+    document.getElementById("pageable_div_id").innerHTML = html;
+  }
+
+  function getUsers(page) {
+    var inputPageElement = document.getElementById("page_number_id");
+    var filter = document.getElementById("page_filter_id").value;
+    var type = document.getElementById("spinner_list_id").value;
+    var pageNum = inputPageElement.value;
+    if (page == null) {
+      page = pageNum - 1;
+    }
+    var link ="";
+    if (filter !== "") {
+
+      link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + page;
+    }
+    else {
+      link = "http://localhost:8080/api/users?page=" + page
+    }
+    $.get(link, function(data, status){
+      console.log(data);
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>Username</th>\n' +
+              '        <th>Password</th>\n' +
+              '        <th>Email</th>\n' +
+              '        <th>Bio</th>\n' +
+              '    </tr>';
+
+      for (var i = 0; i< data.users.length; i++) {
+        html = html + '    <tr>\n' +
+                '        <td>' + data.users[i].id + '</td>\n' +
+                '        <td>' + data.users[i].username + '</td>\n' +
+                '        <td>' + data.users[i].password + '</td>\n' +
+                '        <td>' + data.users[i].email + '</td>\n' +
+                '        <td>' + data.users[i].bio + '</td>\n' +
+                '    </tr>';
+      }
+      document.getElementById("users_table").innerHTML = html;
+      displayPageable(data.currentPage, data.totalItems, data.totalPages);
+      inputPageElement.value = "";
+    });
+  }
+
+  function goToPage() {
+    var pageNum = document.getElementById("page_number_id").value - 1;
+    var filter = document.getElementById("page_filter_id").value;
+    var type = document.getElementById("spinner_list_id").value;
+    if (pageNum < 0) {
+      pageNum = 0;
+    }
+    var link ="";
+    if (filter !== "") {
+      link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
+    }
+    else {
+      link = "http://localhost:8080/api/users?page=" + pageNum;
+    }
+    // if (page == null) {
+    //     page = pageNum;
+    // }
+    $.get(link, function(data, status){
+      console.log(data);
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>Username</th>\n' +
+              '        <th>Password</th>\n' +
+              '        <th>Email</th>\n' +
+              '        <th>Bio</th>\n' +
+              '    </tr>';
+
+      for (var i = 0; i< data.users.length; i++) {
+        html = html + '    <tr>\n' +
+                '        <td>' + data.users[i].id + '</td>\n' +
+                '        <td>' + data.users[i].username + '</td>\n' +
+                '        <td>' + data.users[i].password + '</td>\n' +
+                '        <td>' + data.users[i].email + '</td>\n' +
+                '        <td>' + data.users[i].bio + '</td>\n' +
+                '    </tr>';
+      }
+      document.getElementById("users_table").innerHTML = html;
+      displayPageable(data.currentPage, data.totalItems, data.totalPages);
+    });
+  }
+
+  function goToPageWithFilter() {
+    var pageNum = document.getElementById("page_number_id").value ;
+    var filter = document.getElementById("page_filter_id").value;
+    var type = document.getElementById("spinner_list_id").value;
+    if (pageNum < 0) {
+      pageNum = 0;
+    }
+    var link ="";
+    if (filter !== "") {
+      link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
+      console.log(link);
+    }
+    else {
+      link = "http://localhost:8080/api/users?page=0"
+    }
+    $.get(link, function(data, status){
+      console.log(data);
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>Username</th>\n' +
+              '        <th>Password</th>\n' +
+              '        <th>Email</th>\n' +
+              '        <th>Bio</th>\n' +
+              '    </tr>';
+
+      for (var i = 0; i< data.users.length; i++) {
+        html = html + '    <tr>\n' +
+                '        <td>' + data.users[i].id + '</td>\n' +
+                '        <td>' + data.users[i].username + '</td>\n' +
+                '        <td>' + data.users[i].password + '</td>\n' +
+                '        <td>' + data.users[i].email + '</td>\n' +
+                '        <td>' + data.users[i].bio + '</td>\n' +
+                '    </tr>';
+      }
+      document.getElementById("users_table").innerHTML = html;
+      displayPageable(data.currentPage, data.totalItems, data.totalPages);
+    });
+  }
+</script>
+</body>
+</html>
