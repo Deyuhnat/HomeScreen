@@ -215,3 +215,11 @@ button {
   button:hover {
     background-color: var(--color-black);
   }
+
+  #page_filter_id {
+    background-color: red;
+  }
+
+  #spinner_list_id {
+    padding: 50px;
+  }
