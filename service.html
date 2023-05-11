@@ -56,6 +56,7 @@
     </ul>
   </div>
 
+  <div class="container">
 <input id="page_filter_id" type="text" value="" placeholder="Filter">
 <select id="spinner_list_id">
   <option value="Id">Id</option>
@@ -65,6 +66,7 @@
 </select>
 <button onclick="goToPageWithFilter()">Go</button>
 
+<div class="container">
 <!-- <table id="service_table"> -->
   <div class="card-container" id="service_cards">
 
@@ -75,6 +77,7 @@
 
 <input id="page_number_id" type="number" value="1" placeholder="Go to page">
 <button onclick="goToPage()">Go</button>
+</div>
 
 <script>
   var pageSize = 10;
@@ -129,9 +132,10 @@
       var html = '';
 
 
-    for (var i = 0; i < data.services.length; i++) {
+      for (var i = 0; i < data.services.length; i++) {
         html += '<div class="card">\n' +
           '  <div class="card-content">\n' +
+          '    <img src="./images/ruby.png" alt="Service Image" class="card-image">\n' +
           '    <h2 class="card-id">' + data.services[i].id + '</h2>\n' +
           '    <p class="card-uid">' + data.services[i].uid + '</p>\n' +
           '    <h3 class="card-name">' + data.services[i].name + '</h3>\n' +
@@ -181,6 +185,7 @@ inputPageElement.value = "";
               for (var i = 0; i < data.services.length; i++) {
         html += '<div class="card">\n' +
           '  <div class="card-content">\n' +
+          '    <img src="./images/ruby.png" alt="Service Image" class="card-image">\n' +
           '    <h2 class="card-id">' + data.services[i].id + '</h2>\n' +
           '    <p class="card-uid">' + data.services[i].uid + '</p>\n' +
           '    <h3 class="card-name">' + data.services[i].name + '</h3>\n' +
@@ -193,7 +198,6 @@ inputPageElement.value = "";
 
 document.getElementById("service_cards").innerHTML = html;
 displayPageable(data.currentPage, data.totalItems, data.totalPages);
-inputPageElement.value = "";
     });
   }
 
@@ -226,6 +230,7 @@ inputPageElement.value = "";
               for (var i = 0; i < data.services.length; i++) {
         html += '<div class="card">\n' +
           '  <div class="card-content">\n' +
+          '    <img src="./images/ruby.png" alt="Service Image" class="card-image">\n' +
           '    <h2 class="card-id">' + data.services[i].id + '</h2>\n' +
           '    <p class="card-uid">' + data.services[i].uid + '</p>\n' +
           '    <h3 class="card-name">' + data.services[i].name + '</h3>\n' +
@@ -238,7 +243,6 @@ inputPageElement.value = "";
 
 document.getElementById("service_cards").innerHTML = html;
 displayPageable(data.currentPage, data.totalItems, data.totalPages);
-inputPageElement.value = "";
     });
   }
 </script>
