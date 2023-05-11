@@ -110,6 +110,9 @@
       document.getElementById("pageable_div_id").innerHTML = html;
     }
 
+    $.get(link, function(data, status){
+      console.log(data);
+      var html = '';
 
       for (var i = 0; i < data.services.length; i++) {
         html += '<div class="card">\n' +

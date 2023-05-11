@@ -220,7 +220,6 @@ button {
     background-color: var(--color-black);
   }
 
-<<<<<<< HEAD
   .card-image {
     display: block;
     margin: auto;
@@ -243,12 +242,3 @@ button {
   }
 }
 
-=======
-  #page_filter_id {
-    background-color: red;
-  }
-
-  #spinner_list_id {
-    padding: 50px;
-  }
->>>>>>> 62afe629adfeab68fefe08bd52c35bd15b4dcc58
