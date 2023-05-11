@@ -6,7 +6,10 @@ const buildCardTemplate = (service) => {
     return `
         <div class="box">
             <img src="./images/${service.image}" alt="">
-            <h3>${service.service}</h3>
+            <p>${service.id}</p>
+            <p>${service.uid}</p>
+            <h3>${service.name}</h3>
+            <p>${service.price}</p>
             <p>${service.description}</p>
             <a href="${service.information}" class="btn">More infomation</a>
         </div>
@@ -22,7 +25,10 @@ fetch('http://localhost:3000/services')
         const cardTemplate = `
             <div class="box">
                 <img src="./images/java.png" alt="">
-                <h3>Service 1</h3>
+                <p>id</p>
+                <p>Uid</p>
+                <h3>Name</h3>
+                <p>Price</p>
                 <p>Description</p>
                 <a href="#" class="btn">More infomation</a>
             </div>
@@ -49,8 +55,8 @@ serviceForm.addEventListener('submit', (e) => {
 
     const filteredList = [];
     for (sv of services) {
-        if (searchInput.value.toLowerCase() === sv.service.toLowerCase()) {
-            console.log('found:', sv.service);
+        if (searchInput.value.toLowerCase() === sv.Name.toLowerCase()) {
+            console.log('found:', sv.Name);
             filteredList.push(sv);
         }
     }

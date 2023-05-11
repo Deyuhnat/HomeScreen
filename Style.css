@@ -6,7 +6,7 @@
     font-family: 'Poppins',sans-serif;
 }
 body{
-    background: url("loginpic.png");
+    background: url("./images/loginpic.png");
     background-position: right;
     background-repeat: no-repeat;
     background-attachment: fixed;

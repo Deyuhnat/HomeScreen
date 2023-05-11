@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;800&display=swap');
+
+*{
+    font-family: 'Inter', sans-serif;
+    margin:0; padding:0;
+    box-sizing: none; border:none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: .2s linear;
+}
+
 :root {
   
     --color-primary: #04090f;
@@ -10,9 +21,12 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+
+
   body::before {
     content: "";
-    background-image: url("./images/welcome.jpg");
+    background-image: url("./images/dev.png");
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -25,25 +39,8 @@
   
   body {
     font-family: sans-serif;
-    overflow: hidden;
     /* position: relative; Add this line to make sure the ::before element is positioned correctly */
   }
-
-  .text{
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(39, 149, 212, 0.4);
-    color: #000000;
-    font-weight: bold;
-    border: 3px solid #f1f1f1;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-inderx: 2;
-    width: 80%;
-    text-align: center;
-    padding: 20px;
-    }
 
   .logo {
     color: var(--color-white);
@@ -119,4 +116,102 @@
     height: calc(100vh - 80px);
     background-image: url(.images/bg.jpg);
     background-position: center;
+  }
+
+
+
+  .card {
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+}
+
+.card-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-body {
+    line-height: 1.6;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .card {
+    background-color: var(--color-black);
+    color: var(--color-white);
+    width: 300px;
+    margin: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    text-align: center; /* Add this line to center the text */
+}
+  
+  .card-id {
+    font-size: 22px;
+  }
+  
+  .card-uid {
+    font-size: 18px;
+    color: var(--color-primary);
+  }
+  
+  .card-name {
+    font-size: 24px;
+    margin-top: 10px;
+  }
+  
+  .card-price {
+    font-size: 20px;
+    color: var(--color-primary);
+    margin-top: 10px;
+  }
+  
+  .card-description {
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+
+  .info-button {
+    display: inline-block;
+    background-color: var(--color-black);
+    color: var(--color-white);
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    position: relative;
+    transition: all 0.3s;
+}
+
+.info-button:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+button {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: background-color .2s;
+  }
+  
+  button:hover {
+    background-color: var(--color-black);
   }

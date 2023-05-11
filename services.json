@@ -1,56 +1,65 @@
 [
     {
         "image": "java.png",
-        "service": "Java",
-        "description": "JAVa description",
+        "Name": "Java",
+        "Price": "200",
+        "Description": "JAVa description",
         "information": "Link 1"
     },
     {
         "image": "c++.png",
-        "service": "C++",
-        "description": "C++ description",
+        "Name": "C++",
+        "Price": "300",
+        "Description": "C++ description",
         "information": "Link 2"
     },
     {
         "image": "html.png",
-        "service": "HTML",
-        "description": "HTML description",
+        "Name": "HTML",
+        "Price": "400",
+        "Description": "HTML description",
         "information": "Link 3"
     },
     {
         "image": "python.jpg",
-        "service": "Python",
-        "description": "Python description",
+        "Name": "Python",
+        "Price": "500",
+        "Description": "Python description",
         "information": "Link 4"
     },
     {
         "image": "python.jpg",
-        "service": "Python",
-        "description": "Python description",
+        "Name": "Python",
+        "Price": "600",
+        "Description": "Python description",
         "information": "Link 4"
     },
     {
         "image": "html.png",
-        "service": "HTML",
-        "description": "HTML description",
+        "Name": "HTML",
+        "Price": "700",
+        "Description": "HTML description",
         "information": "Link 3"
     },
     {
         "image": "html.png",
-        "service": "HTML",
-        "description": "HTML description",
+        "Name": "HTML",
+        "Price": "800",
+        "Description": "HTML description",
         "information": "Link 3"
     },
     {
         "image": "html.png",
-        "service": "HTML",
-        "description": "HTML description",
+        "Name": "HTML",
+        "Price": "900",
+        "Description": "HTML description",
         "information": "Link 3"
     },
     {
         "image": "html.png",
-        "service": "HTML",
-        "description": "HTML description",
+        "Name": "HTML",
+        "Price": "1000",
+        "Description": "HTML description",
         "information": "Link 3"
     }
 ]
