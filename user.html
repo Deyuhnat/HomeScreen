@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>User</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <link rel="stylesheet" href="user.css">
 </head>
 <style>
   table {
@@ -24,39 +23,6 @@
   }
 </style>
 <body>
-
-  <div class="menu-bar">
-    <h1 class="logo">Dev<span>Service</span></h1>
-    <ul>
-      <li><a href="Home.html">Home</a></li>
-      <li><a href="service.html">Service</a></li>
-      <li><a href="user.html">User</a></li>
-      <li><a href="#">Pages <i class="fas fa-caret-down"></i></a>
-          <div class="dropdown-menu">
-              <ul>
-                <!-- <li><a href="#">""</a></li> -->
-                <li>
-                  <a href="#">Community <i class="fas fa-caret-right"></i></a>
-                  
-                  <div class="dropdown-menu-1">
-                    <ul>
-                      <li><a href="#">Event</a></li>
-                      <li><a href="#">Discussion</a></li>
-                      <li><a href="#">Blog</a></li>
-                    </ul>
-                  </div>
-                </li>
-                <li><a href="#">FAQ</a></li>
-              </ul>
-            </div>
-      </li>
-      <li><a href="#">Profile</a>
-      </li>
-      <li><a href="#">Contact us</a></li>
-    </ul>
-  </div>
-
-  <div class="container">
 <input id="page_filter_id" type="text" value="" placeholder="Filter">
 <select id="spinner_list_id">
   <option value="Id">Id</option>
@@ -64,15 +30,13 @@
 </select>
 <button onclick="goToPageWithFilter()">Go</button>
 
-  <div class="card-container" id="users_cards"></div>
+<table id="users_table">
 
 </table>
 <div id="pageable_div_id"></div>
 
 <input id="page_number_id" type="number" value="1" placeholder="Go to page">
 <button onclick="goToPage()">Go</button>
-
-</div>
 
 <script>
   var pageSize = 10;
@@ -117,21 +81,24 @@
     }
     $.get(link, function(data, status){
       console.log(data);
-      var html = '';
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>Username</th>\n' +
+              '        <th>Password</th>\n' +
+              '        <th>Email</th>\n' +
+              '        <th>Bio</th>\n' +
+              '    </tr>';
 
-
-for (var i = 0; i < data.users.length; i++) {
-        html += '<div class="card">\n' +
-          '  <div class="card-content">\n' +
-          '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
-          '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
-          '    <p class="card-price">' + data.users[i].email + '</p>\n' +
-          // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button">More Info</a>\n' +
-          '  </div>\n' +
-          '</div>';
+      for (var i = 0; i< data.users.length; i++) {
+        html = html + '    <tr>\n' +
+                '        <td>' + data.users[i].id + '</td>\n' +
+                '        <td>' + data.users[i].username + '</td>\n' +
+                '        <td>' + data.users[i].password + '</td>\n' +
+                '        <td>' + data.users[i].email + '</td>\n' +
+                '        <td>' + data.users[i].bio + '</td>\n' +
+                '    </tr>';
       }
-      document.getElementById("users_cards").innerHTML = html;
+      document.getElementById("users_table").innerHTML = html;
       displayPageable(data.currentPage, data.totalItems, data.totalPages);
       inputPageElement.value = "";
     });
@@ -156,20 +123,24 @@ for (var i = 0; i < data.users.length; i++) {
     // }
     $.get(link, function(data, status){
       console.log(data);
-      var html = '';
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>Username</th>\n' +
+              '        <th>Password</th>\n' +
+              '        <th>Email</th>\n' +
+              '        <th>Bio</th>\n' +
+              '    </tr>';
 
-              for (var i = 0; i < data.users.length; i++) {
-        html += '<div class="card">\n' +
-          '  <div class="card-content">\n' +
-          '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
-          '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
-          '    <p class="card-price">' + data.users[i].email + '</p>\n' +
-          // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button">More Info</a>\n' +
-          '  </div>\n' +
-          '</div>';
+      for (var i = 0; i< data.users.length; i++) {
+        html = html + '    <tr>\n' +
+                '        <td>' + data.users[i].id + '</td>\n' +
+                '        <td>' + data.users[i].username + '</td>\n' +
+                '        <td>' + data.users[i].password + '</td>\n' +
+                '        <td>' + data.users[i].email + '</td>\n' +
+                '        <td>' + data.users[i].bio + '</td>\n' +
+                '    </tr>';
       }
-      document.getElementById("users_cards").innerHTML = html;
+      document.getElementById("users_table").innerHTML = html;
       displayPageable(data.currentPage, data.totalItems, data.totalPages);
     });
   }
@@ -191,20 +162,24 @@ for (var i = 0; i < data.users.length; i++) {
     }
     $.get(link, function(data, status){
       console.log(data);
-      var html = '';
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>Username</th>\n' +
+              '        <th>Password</th>\n' +
+              '        <th>Email</th>\n' +
+              '        <th>Bio</th>\n' +
+              '    </tr>';
 
-              for (var i = 0; i < data.users.length; i++) {
-        html += '<div class="card">\n' +
-          '  <div class="card-content">\n' +
-          '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
-          '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
-          '    <p class="card-price">' + data.users[i].email + '</p>\n' +
-          // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button">More Info</a>\n' +
-          '  </div>\n' +
-          '</div>';
+      for (var i = 0; i< data.users.length; i++) {
+        html = html + '    <tr>\n' +
+                '        <td>' + data.users[i].id + '</td>\n' +
+                '        <td>' + data.users[i].username + '</td>\n' +
+                '        <td>' + data.users[i].password + '</td>\n' +
+                '        <td>' + data.users[i].email + '</td>\n' +
+                '        <td>' + data.users[i].bio + '</td>\n' +
+                '    </tr>';
       }
-      document.getElementById("users_cards").innerHTML = html;
+      document.getElementById("users_table").innerHTML = html;
       displayPageable(data.currentPage, data.totalItems, data.totalPages);
     });
   }
