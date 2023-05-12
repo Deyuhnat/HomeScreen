@@ -32,7 +32,7 @@
   .text{
     background-color: rgb(0, 0, 0);
     background-color: rgba(39, 149, 212, 0.4);
-    color: #000000;
+    color: #e3fc02;
     font-weight: bold;
     border: 3px solid #f1f1f1;
     position: absolute;
@@ -115,8 +115,4 @@
     top: 0;
     background-color: var(--color-black);
   }
-  .hero {
-    height: calc(100vh - 80px);
-    background-image: url(.images/bg.jpg);
-    background-position: center;
-  }
+ 
