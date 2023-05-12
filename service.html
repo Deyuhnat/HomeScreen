@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Service</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <link rel="stylesheet" href="service.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 <style>
   table {
@@ -16,8 +13,7 @@
     width: 100%;
   }
 
-  td,
-  th {
+  td, th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
@@ -27,9 +23,8 @@
     background-color: #dddddd;
   }
 </style>
-
 <body>
-  <div class="dev-image"></div>
+<div class="dev-image"></div>
   <div class="menu-bar">
     <h1 class="logo">Dev<span>Service</span></h1>
     <ul>
@@ -37,23 +32,23 @@
       <li><a href="service.html">Service</a></li>
       <li><a href="user.html">User</a></li>
       <li><a href="#">Pages <i class="fas fa-caret-down"></i></a>
-        <div class="dropdown-menu">
-          <ul>
-            <!-- <li><a href="#">""</a></li> -->
-            <li>
-              <a href="#">Community <i class="fas fa-caret-right"></i></a>
-
-              <div class="dropdown-menu-1">
-                <ul>
-                  <li><a href="#">Event</a></li>
-                  <li><a href="#">Discussion</a></li>
-                  <li><a href="#">Blog</a></li>
-                </ul>
-              </div>
-            </li>
-            <li><a href="#">FAQ</a></li>
-          </ul>
-        </div>
+          <div class="dropdown-menu">
+              <ul>
+                <!-- <li><a href="#">""</a></li> -->
+                <li>
+                  <a href="#">Community <i class="fas fa-caret-right"></i></a>
+                  
+                  <div class="dropdown-menu-1">
+                    <ul>
+                      <li><a href="#">Event</a></li>
+                      <li><a href="#">Discussion</a></li>
+                      <li><a href="#">Blog</a></li>
+                    </ul>
+                  </div>
+                </li>
+                <li><a href="#">FAQ</a></li>
+              </ul>
+            </div>
       </li>
       <li><a href="#">Blog</a>
       </li>
@@ -61,7 +56,8 @@
     </ul>
   </div>
 
-  <div class="container">
+<div class="container">
+  
 <input id="page_filter_id" type="text" value="" placeholder="Filter">
 <select id="spinner_list_id">
   <option value="Id">Id</option>
@@ -71,50 +67,73 @@
 </select>
 <button onclick="goToPageWithFilter()">Go</button>
 
-<div class="container">
 <!-- <table id="service_table"> -->
   <div class="card-container" id="service_cards">
 
   </div>
 
-  </table>
-  <div id="pageable_div_id"></div>
+</table>
+<div id="pageable_div_id"></div>
 
 <input id="page_number_id" type="number" value="1" placeholder="Go to page">
 <button onclick="goToPage()">Go</button>
+
 </div>
 
+<script>
+  var pageSize = 10;
+  var previousPage, nextPage
+  getServices();
 
-  <script>
-    var pageSize = 10;
-    var previousPage, nextPage
-    getServices();
+  function displayPageable(pageNumber, totalElement, totalPages) {
+    totalPages -= 1;
+    var previousButtonStatus = "";
+    var nextButtonStatus = "";
 
-    function displayPageable(pageNumber, totalElement, totalPages) {
-      totalPages -= 1;
-      var previousButtonStatus = "";
-      var nextButtonStatus = "";
-
-      previousPage = pageNumber - 1;
-      if (previousPage < 0) {
-        previousButtonStatus = "disabled";
-        previousPage = 0;
-      }
-      nextPage = pageNumber + 1;
-      if (nextPage > totalPages) {
-        nextButtonStatus = "disabled";
-        nextPage = totalPages;
-      }
-      var html = '<button id="previous_button_id" onclick="getServices(previousPage)" ' + previousButtonStatus + '>Previous</button><button onclick="getServices(nextPage)" ' + nextButtonStatus + '>Next</button>' +
-        '<br><span>' + 'Page ' + (pageNumber + 1) + ' of ' + (totalPages + 1) + '</span>';
-      document.getElementById("pageable_div_id").innerHTML = html;
+    previousPage = pageNumber -1;
+    if (previousPage < 0) {
+      previousButtonStatus = "disabled";
+      previousPage = 0;
     }
+    nextPage = pageNumber + 1;
+    if (nextPage > totalPages) {
+      nextButtonStatus = "disabled";
+      nextPage = totalPages;
+    }
+    var html = '<button id="previous_button_id" onclick="getServices(previousPage)" ' + previousButtonStatus + '>Previous</button><button onclick="getServices(nextPage)" ' + nextButtonStatus + '>Next</button>' +
+            '<br><span>'+ 'Page ' + (pageNumber+1) +' of ' + (totalPages+1) + '</span>';
+    document.getElementById("pageable_div_id").innerHTML = html;
+  }
 
+  function getServices(page) {
+    var inputPageElement = document.getElementById("page_number_id");
+    var filter = document.getElementById("page_filter_id").value;
+    var type = document.getElementById("spinner_list_id").value;
+    var pageNum = inputPageElement.value;
+    if (page == null) {
+      page = pageNum - 1;
+    }
+    var link ="";
+    if (filter !== "") {
+      if (type === "Min Price") {
+        type = "price"
+        var priceType = "min"
+      }
+      if (type === "Max Price") {
+        type = "price"
+        var priceType = "max"
+      }
+      link = "http://localhost:8080/api/service?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + page + "&priceType=" + priceType;
+    }
+    else {
+      link = "http://localhost:8080/api/service?page=" + page
+    }
     $.get(link, function(data, status){
       console.log(data);
       var html = '';
 
-      for (var i = 0; i < data.services.length; i++) {
+
+    for (var i = 0; i < data.services.length; i++) {
         html += '<div class="card">\n' +
           '  <div class="card-content">\n' +
           '    <img src="./images/ruby.png" alt="Service Image" class="card-image">\n' +
@@ -147,17 +166,9 @@ inputPageElement.value = "";
         type = "price"
         var priceType = "min"
       }
-      var link = "";
-      if (filter !== "") {
-        if (type === "Min Price") {
-          type = "price"
-          var priceType = "min"
-        }
-        if (type === "Max Price") {
-          type = "price"
-          var priceType = "max"
-        }
-        link = "http://localhost:8080/api/service?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + page + "&priceType=" + priceType;
+      if (type === "Max Price") {
+        type = "price"
+        var priceType = "max"
       }
       link = "http://localhost:8080/api/service?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum + "&priceType=" + priceType;
     }
@@ -188,6 +199,7 @@ inputPageElement.value = "";
 
 document.getElementById("service_cards").innerHTML = html;
 displayPageable(data.currentPage, data.totalItems, data.totalPages);
+inputPageElement.value = "";
     });
   }
 
@@ -204,58 +216,18 @@ displayPageable(data.currentPage, data.totalItems, data.totalPages);
         type = "price"
         var priceType = "min"
       }
-      $.get(link, function (data, status) {
-        console.log(data);
-        var html = '';
-
-
-        for (var i = 0; i < data.services.length; i++) {
-          html += '<div class="card">\n' +
-            '  <div class="card-content">\n' +
-            '    <h2 class="card-id">' + data.services[i].id + '</h2>\n' +
-            '    <p class="card-uid">' + data.services[i].uid + '</p>\n' +
-            '    <h3 class="card-name">' + data.services[i].name + '</h3>\n' +
-            '    <p class="card-price">' + data.services[i].price + '</p>\n' +
-            '    <p class="card-description">' + data.services[i].description + '</p>\n' +
-            '    <a href="' + data.services[i].infoLink + '" class="info-button">More Info</a>\n' +
-            '  </div>\n' +
-            '</div>';
-        }
-
-        document.getElementById("service_cards").innerHTML = html;
-        displayPageable(data.currentPage, data.totalItems, data.totalPages);
-        inputPageElement.value = "";
-      });
+      if (type === "Max Price") {
+        type = "price"
+        var priceType = "max"
+      }
+      link = "http://localhost:8080/api/service?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum + "&priceType=" + priceType;
     }
-
-    function goToPage() {
-      var pageNum = document.getElementById("page_number_id").value - 1;
-      var filter = document.getElementById("page_filter_id").value;
-      var type = document.getElementById("spinner_list_id").value;
-      if (pageNum < 0) {
-        pageNum = 0;
-      }
-      var link = "";
-      if (filter !== "") {
-        if (type === "Min Price") {
-          type = "price"
-          var priceType = "min"
-        }
-        if (type === "Max Price") {
-          type = "price"
-          var priceType = "max"
-        }
-        link = "http://localhost:8080/api/service?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum + "&priceType=" + priceType;
-      }
-      else {
-        link = "http://localhost:8080/api/service?page=" + pageNum;
-      }
-      // if (page == null) {
-      //     page = pageNum;
-      // }
-      $.get(link, function (data, status) {
-        console.log(data);
-        var html = '';
+    else {
+      link = "http://localhost:8080/api/service?page=0"
+    }
+    $.get(link, function(data, status){
+      console.log(data);
+      var html = '';
 
               for (var i = 0; i < data.services.length; i++) {
         html += '<div class="card">\n' +
@@ -273,9 +245,9 @@ displayPageable(data.currentPage, data.totalItems, data.totalPages);
 
 document.getElementById("service_cards").innerHTML = html;
 displayPageable(data.currentPage, data.totalItems, data.totalPages);
+inputPageElement.value = "";
     });
   }
 </script>
 </body>
-
 </html>
