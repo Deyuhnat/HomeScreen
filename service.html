@@ -206,14 +206,27 @@
             '    <h3 class="card-name">' + data.services[i].name + '</h3>\n' +
             '    <p class="card-price">' + "price: " + data.services[i].price + '</p>\n' +
             // '    <p class="card-description">' + data.services[i].description + '</p>\n' +
-            '    <a href="' + data.services[i].infoLink + '" class="info-button">More Info</a>\n' +
+            '    <a href="' + data.services[i].infoLink + '" class="info-button more-info" data-id="' + data.services[i].id + '">More Info</a>\n' +
             '  </div>\n' +
             '</div>';
         }
 
         document.getElementById("service_cards").innerHTML = html;
+
+        document.querySelectorAll('.more-info').forEach(item => {
+          item.addEventListener('click', event => {
+            // Prevent default navigation
+            event.preventDefault();
+
+            // Get service id from data-id attribute
+            let serviceId = event.target.getAttribute('data-id');
+
+            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
+            window.location.href = `serviceDetail.html?id=${serviceId}`;
+          })
+        });
+
         displayPageable(data.currentPage, data.totalItems, data.totalPages);
-        inputPageElement.value = "";
       });
     }
 
@@ -252,14 +265,27 @@
             '    <h3 class="card-name">' + data.services[i].name + '</h3>\n' +
             '    <p class="card-price">' + "price: " + data.services[i].price + '</p>\n' +
             // '    <p class="card-description">' + data.services[i].description + '</p>\n' +
-            '    <a href="' + data.services[i].infoLink + '" class="info-button">More Info</a>\n' +
+            '    <a href="' + data.services[i].infoLink + '" class="info-button more-info" data-id="' + data.services[i].id + '">More Info</a>\n' +
             '  </div>\n' +
             '</div>';
         }
 
         document.getElementById("service_cards").innerHTML = html;
+
+        document.querySelectorAll('.more-info').forEach(item => {
+          item.addEventListener('click', event => {
+            // Prevent default navigation
+            event.preventDefault();
+
+            // Get service id from data-id attribute
+            let serviceId = event.target.getAttribute('data-id');
+
+            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
+            window.location.href = `serviceDetail.html?id=${serviceId}`;
+          })
+        });
+
         displayPageable(data.currentPage, data.totalItems, data.totalPages);
-        inputPageElement.value = "";
       });
     }
   </script>

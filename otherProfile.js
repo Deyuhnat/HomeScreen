@@ -1,33 +1,72 @@
+// const urlParams = new URLSearchParams(window.location.search);
+// const userId = urlParams.get('id');  
 
-  
-  document.querySelector('#profilePictureInput').addEventListener('change', (event) => {
-    // Get the selected file
-    let file = event.target.files[0];
-  
-    // Create a FileReader object
-    let reader = new FileReader();
-  
-    // Set the onload event of the FileReader object
-    reader.onload = (event) => {
-      // Update the src attribute of the img element with the data URL of the selected file
-      let dataURL = event.target.result;
-      document.querySelector('img').src = dataURL;
-  
-      // Store the data URL of the selected file in local storage
-      localStorage.setItem('profilePicture', dataURL);
-    };
-  
-    // Read the selected file as a data URL
-    reader.readAsDataURL(file);
-  });
-  
-  window.addEventListener('load', () => {
-    // Get the value stored in local storage
-    let dataURL = localStorage.getItem('profilePicture');
-  
-    // Check if a value was stored in local storage
-    if (dataURL) {
-      // Set the src attribute of the img element to the value stored in local storage
-      document.querySelector('img').src = dataURL;
-    }
-  });
+// let allUsers = JSON.parse(localStorage.getItem('users'));
+
+// let user = allUsers.find(user => user.id === userId);
+
+// if (user) {
+//   document.getElementById('id').innerText = user.id;
+//   document.getElementById('name').innerText = user.username; // changed 'name' to 'username'
+//   document.getElementById('email').innerText = user.email;
+//   document.getElementById('description').innerText = user.description;
+// } else {
+//   console.error('User not found');
+// }
+
+const urlParams = new URLSearchParams(window.location.search);
+const userId = urlParams.get('id');  
+
+let user = JSON.parse(localStorage.getItem('user'));
+
+let userID = user.id;
+
+fetch(`http://localhost:8080/api/users/${userId}`)
+.then(response => {
+  if (!response.ok) {
+    throw new Error('Failed to fetch user details');
+}
+  return response.json();
+})
+.then(data => {
+ localStorage.setItem('service', JSON.stringify(data));
+
+
+ document.getElementById('id').innerText = data.id;
+ document.getElementById('name').innerText = data.username;
+ document.getElementById('email').innerText = data.email;
+ document.getElementById('description').innerText = data.bio;
+
+
+});
+document.querySelector('#profilePictureInput').addEventListener('change', (event) => {
+// Get the selected file
+let file = event.target.files[0];
+
+// Create a FileReader object
+let reader = new FileReader();
+
+// Set the onload event of the FileReader object
+reader.onload = (event) => {
+ // Update the src attribute of the img element with the data URL of the selected file
+ let dataURL = event.target.result;
+ document.querySelector('img').src = dataURL;
+
+ // Store the data URL of the selected file in local storage
+ localStorage.setItem('profilePicture', dataURL);
+};
+
+// Read the selected file as a data URL
+reader.readAsDataURL(file);
+});
+
+window.addEventListener('load', () => {
+// Get the value stored in local storage
+let dataURL = localStorage.getItem('profilePicture');
+
+// Check if a value was stored in local storage
+if (dataURL) {
+ // Set the src attribute of the img element to the value stored in local storage
+ document.querySelector('img').src = dataURL;
+}
+})

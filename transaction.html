@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+    z-index: 8;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+  }
+  .modal-content {
+    margin: 50px auto;
+    border: 1px solid #999;
+    width: 60%;
+  }
+  h2,
+  p {
+    margin: 0 0 20px;
+    font-weight: 400;
+    color: #999;
+  }
+  span {
+    color: #666;
+    display: block;
+    padding: 0 0 5px;
+  }
+  form {
+    padding: 25px;
+    margin: 25px;
+    box-shadow: 0 2px 5px #f5f5f5;
+    background: #eee;
+  }
+  input,
+  textarea {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #1c87c9;
+    outline: none;
+  }
+  .contact-form button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: #1c87c9;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+  }
+  button:hover {
+    background: #2371a0;
+  }
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  button.button {
+    background: none;
+    border-top: none;
+    outline: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: #02274a 1px solid;
+    padding: 0 0 3px 0;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  button.button:hover {
+    border-bottom: #a99567 1px solid;
+    color: #a99567;
+  }
+</style>
+<body>
+<button onclick="getTransaction('buyer')">View table as Buyer</button>
+<button onclick="getTransaction('seller')">View table as Seller</button>
+<button onclick="getTransactionOfOtherUser()">View other User transaction</button>
+
+<div id="modalTwo" class="modal">
+  <div class="modal-content">
+    <div class="contact-form">
+      <span class="close">&times;</span>
+      <form>
+        <h2>Edit Transaction</h2>
+        <div>
+          <span>Status</span>
+          <select id="spinner_list_new_status">
+            <option value="Cancel">Cancel</option>
+            <option value="Pending">Pending</option>
+            <option value="Accepted">Accepted</option>
+            <option value="Completed">Completed</option>
+          </select>
+        </div>
+        <span class="submit">Submit</span>
+      </form>
+    </div>
+  </div>
+</div>
+
+<table id="transaction_table">
+
+</table>
+
+<script>
+  var defaultUID = 156;
+  var defaultSID = 850;
+  var defaultOtherUserID = 914;
+  var idDisplay;
+  var editURL;
+
+  function getTransaction(type) {
+    var link = "http://localhost:8080/api/transaction"
+
+    $.get(link, function(data, status){
+      console.log(data);
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>UID</th>\n' +
+              '        <th>SID</th>\n' +
+              '        <th>Name</th>\n' +
+              '        <th>Status</th>\n' +
+              '        <th></th>\n' +
+              '    </tr>';
+
+      var tableDetail = '';
+
+      for (var i = 0; i< data.length; i++) {
+        if (type === 'buyer') {
+          var deleteUrl = 'api/transaction/' + data[i].id + '/delete';
+          tableDetail = '    <tr>\n' +
+                  '        <td>' + data[i].id + '</td>\n' +
+                  '        <td>' + data[i].uid + '</td>\n' +
+                  '        <td>' + data[i].sid + '</td>\n' +
+                  '        <td>' + data[i].name + '</td>\n' +
+                  '        <td>' + data[i].status + '</td>\n' +
+                  '        <td> <button class="btn btn-danger" onclick="confirmDelete(\'' + deleteUrl + '\')">Delete</button></td>\n' +
+                  '    </tr>';
+          if (data[i].uid !== defaultUID) {
+            continue;
+          }
+        }
+
+        if (type === 'seller') {
+          var editID = 'edit' + data[i].id
+          var editUrl = 'api/transaction/' + data[i].id + '/edit';
+
+          tableDetail = '    <tr>\n' +
+                  '        <td id="id' + data[i].id + '">' + data[i].id + '</td>\n' +
+                  '        <td id="uid' + data[i].id + '">' + data[i].uid + '</td>\n' +
+                  '        <td id="sid' + data[i].id + '">' + data[i].sid + '</td>\n' +
+                  '        <td id="nameId' + data[i].id + '">' + data[i].name + '</td>\n' +
+                  '        <td>' + data[i].status + '</td>\n' +
+                  '        <td><button class="button" data-modal="modalTwo" id="' + editID + '" onclick="displayForm(\'' + editUrl + '\',' + data[i].id + ')">Edit</button></td>\n' +
+                  '    </tr>';
+          if (data[i].sid !== defaultSID) {
+            continue;
+          }
+        }
+        html = html + tableDetail;
+      }
+      document.getElementById("transaction_table").innerHTML = html;
+    });
+  }
+
+  function getTransactionOfOtherUser() {
+    var link = "http://localhost:8080/api/transaction"
+
+    $.get(link, function(data, status){
+      console.log(data);
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>UID</th>\n' +
+              '        <th>SID</th>\n' +
+              '        <th>Name</th>\n' +
+              '        <th>Status</th>\n' +
+              '        <th></th>\n' +
+              '    </tr>';
+
+      var tableDetail = '';
+
+      for (var i = 0; i< data.length; i++) {
+        tableDetail = '    <tr>\n' +
+                '        <td>' + data[i].id + '</td>\n' +
+                '        <td>' + data[i].uid + '</td>\n' +
+                '        <td>' + data[i].sid + '</td>\n' +
+                '        <td>' + data[i].name + '</td>\n' +
+                '        <td>' + data[i].status + '</td>\n' +
+                '    </tr>';
+        if (data[i].uid !== defaultOtherUserID) {
+          continue;
+        }
+        html = html + tableDetail;
+      }
+      document.getElementById("transaction_table").innerHTML = html;
+    });
+  }
+
+  function confirmDelete(deleteLink) {
+    if (confirm("Are you sure want to delete") == true) {
+      removeTransaction(deleteLink);
+    }
+  }
+
+  // delete the transaction from the database
+  function removeTransaction(deleteURL) {
+    $.ajax({
+
+      type: "DELETE",
+      url: deleteURL,
+
+      success: function () {
+        window.location.reload();
+      },
+
+      failure: function (errMsg) {
+        console.log(errMsg.toString())
+      }
+    });
+  }
+
+  function submitEditTransaction() {
+    var idId = 'id' + idDisplay;
+    var uidId = 'uid' + idDisplay;
+    var sidId = 'sid' + idDisplay;
+    var nameIdId = 'nameId' + idDisplay;
+
+    var id = document.getElementById(idId).innerText;
+    var uid = document.getElementById(uidId).innerText;
+    var sid = document.getElementById(sidId).innerText;
+    var nameId = document.getElementById(nameIdId).innerText;
+    var newStatus = document.getElementById('spinner_list_new_status').value;
+
+    editTransaction(editURL, id, uid, sid, nameId, newStatus);
+  }
+
+  // edit the transaction from the database
+  function editTransaction(editURL, id, uid, sid, newName, newStatus) {
+    let data = {        "id": id,
+      "uid": uid,
+      "sid": sid,
+      "name": newName,
+      "status":  newStatus}
+
+    $.ajax({
+
+      type: "PUT",
+      url: editURL,
+      contentType: "application/json",
+      data: JSON.stringify(data),
+
+      success: function () {
+        window.location.reload();
+      },
+
+      failure: function (errMsg) {
+        console.log(errMsg.toString())
+      }
+    });
+  }
+
+  function displayForm(url, id) {
+    idDisplay = id;
+    editURL = url;
+    document.getElementById("modalTwo").style.display = "block";
+  }
+
+  let closeBtns = [...document.querySelectorAll(".close")];
+  closeBtns.forEach(function (btn) {
+    btn.onclick = function () {
+      let modal = btn.closest(".modal");
+      modal.style.display = "none";
+    };
+  });
+
+  let submitBtns = [...document.querySelectorAll(".submit")];
+  submitBtns.forEach(function (btn) {
+    btn.onclick = function () {
+      submitEditTransaction();
+      let modal = btn.closest(".modal");
+      modal.style.display = "none";
+    };
+  });
+</script>
+</body>
+</html>

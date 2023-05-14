@@ -118,20 +118,52 @@
     $.get(link, function(data, status){
       console.log(data);
       var html = '';
+  //     var allUsers = [];
+  //             for (var i = 0; i < data.users.length; i++) {
 
+  //               var userObject = {
+  //     id: data.users[i].id,
+  //     username: data.users[i].username,
+  //     email: data.users[i].email,
+  //     description: data.users[i].bio
+  //   };
+  //   allUsers.push(userObject);
+  // }
+  //   localStorage.setItem('users', JSON.stringify(allUsers));
+
+  //   // Convert the object to a JSON string
+  //   var userJSON = JSON.stringify(allUsers);
+
+
+      
 
 for (var i = 0; i < data.users.length; i++) {
         html += '<div class="card">\n' +
           '  <div class="card-content">\n' +
           '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
-          '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
-          '    <p class="card-price">' + data.users[i].email + '</p>\n' +
+          '    <h3 class="card-username">' + data.users[i].username + '</h3>\n' +
+          '    <p class="card-email">' + data.users[i].email + '</p>\n' +
           // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button">More Info</a>\n' +
+          '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
           '  </div>\n' +
           '</div>';
       }
       document.getElementById("users_cards").innerHTML = html;
+
+      // check for button more info
+      document.querySelectorAll('.more-info').forEach(item => {
+          item.addEventListener('click', event => {
+            // Prevent default navigation
+            event.preventDefault();
+
+            // Get service id from data-id attribute
+            let userId = event.target.getAttribute('data-id');
+
+            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
+            window.location.href = `otherProfile.html?id=${userId}`;
+          })
+        });
+
       displayPageable(data.currentPage, data.totalItems, data.totalPages);
       inputPageElement.value = "";
     });
@@ -165,11 +197,26 @@ for (var i = 0; i < data.users.length; i++) {
           '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
           '    <p class="card-price">' + data.users[i].email + '</p>\n' +
           // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button">More Info</a>\n' +
+          '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
           '  </div>\n' +
           '</div>';
       }
       document.getElementById("users_cards").innerHTML = html;
+
+     // check for button more info
+     document.querySelectorAll('.more-info').forEach(item => {
+          item.addEventListener('click', event => {
+            // Prevent default navigation
+            event.preventDefault();
+
+            // Get service id from data-id attribute
+            let userId = event.target.getAttribute('data-id');
+
+            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
+            window.location.href = `otherProfile.html?id=${userId}`;
+          })
+        });
+      
       displayPageable(data.currentPage, data.totalItems, data.totalPages);
     });
   }
@@ -200,11 +247,27 @@ for (var i = 0; i < data.users.length; i++) {
           '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
           '    <p class="card-price">' + data.users[i].email + '</p>\n' +
           // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button">More Info</a>\n' +
+          '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
           '  </div>\n' +
           '</div>';
       }
       document.getElementById("users_cards").innerHTML = html;
+
+       // check for button more info
+     document.querySelectorAll('.more-info').forEach(item => {
+          item.addEventListener('click', event => {
+            // Prevent default navigation
+            event.preventDefault();
+
+            // Get service id from data-id attribute
+            let userId = event.target.getAttribute('data-id');
+
+            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
+            window.location.href = `otherProfile.html?id=${userId}`;
+          })
+        });
+      
+
       displayPageable(data.currentPage, data.totalItems, data.totalPages);
     });
   }
