@@ -135,8 +135,8 @@
 </table>
 
 <script>
-  var defaultUID = 156;
-  var defaultSID = 850;
+  var defaultUID = JSON.parse(localStorage.getItem("user")).id;
+  var defaultSID = JSON.parse(localStorage.getItem("user")).id;
   var defaultOtherUserID = 914;
   var idDisplay;
   var editURL;
