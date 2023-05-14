@@ -3,7 +3,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const serviceId = urlParams.get('id');
 
 let user = JSON.parse(localStorage.getItem('user'));
-
+console.log(user.id);
 // Get the value stored in local storage
 let userID = user.id;
 
@@ -53,7 +53,7 @@ fetch(`http://localhost:8080/api/service/${serviceId}`)
         })
           .then(response => {
             if (!response.ok) {
-              throw new Error('Failed to create transaction');
+              throw new Error('Failed to create transaction');//
             }
             return response.json();
           })
@@ -73,3 +73,21 @@ fetch(`http://localhost:8080/api/service/${serviceId}`)
     console.error('Error fetching service details:', error);
     // Handle the error scenario
   });
+
+  document.getElementById("sellerInfoButton").addEventListener("click", function() {
+    event.preventDefault();
+    let sellerId = document.getElementById("userID").innerText;
+    console.log(sellerId);
+    let buyerId = userID;
+    
+    // Check if the sellerId is the same as the buyerId
+    if (sellerId == buyerId) {
+        // Redirect to the user's own profile page
+        window.location.href = "userprofile.html";
+    } else {
+        // Redirect to the otherProfile.html page with the user ID in the URL parameters
+        window.location.href = `otherProfile.html?id=${sellerId}`;
+    }
+});
+
+

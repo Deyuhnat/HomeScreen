@@ -1,21 +1,5 @@
-// const urlParams = new URLSearchParams(window.location.search);
-// const userId = urlParams.get('id');  
-
-// let allUsers = JSON.parse(localStorage.getItem('users'));
-
-// let user = allUsers.find(user => user.id === userId);
-
-// if (user) {
-//   document.getElementById('id').innerText = user.id;
-//   document.getElementById('name').innerText = user.username; // changed 'name' to 'username'
-//   document.getElementById('email').innerText = user.email;
-//   document.getElementById('description').innerText = user.description;
-// } else {
-//   console.error('User not found');
-// }
-
 const urlParams = new URLSearchParams(window.location.search);
-const userId = urlParams.get('id');  
+const userId = urlParams.get('id');
 
 let user = JSON.parse(localStorage.getItem('user'));
 
@@ -29,14 +13,10 @@ fetch(`http://localhost:8080/api/users/${userId}`)
   return response.json();
 })
 .then(data => {
- localStorage.setItem('service', JSON.stringify(data));
-
-
  document.getElementById('id').innerText = data.id;
  document.getElementById('name').innerText = data.username;
  document.getElementById('email').innerText = data.email;
  document.getElementById('description').innerText = data.bio;
-
 
 });
 document.querySelector('#profilePictureInput').addEventListener('change', (event) => {
