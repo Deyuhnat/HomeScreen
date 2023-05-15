@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Service</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="orderservice.css">
+</head>
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td,
+    th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+
+<body>
+    <div class="dev-image"></div>
+    <div class="menu-bar">
+        <h1 class="logo">Dev<span>Service</span></h1>
+        <ul>
+            <li><a href="Home.html">Home</a></li>
+            <li><a href="service.html">Service</a></li>
+            <li><a href="user.html">User</a></li>
+            <li><a href="#">Pages <i class="fas fa-caret-down"></i></a>
+                <div class="dropdown-menu">
+                    <ul>
+                        <!-- <li><a href="#">""</a></li> -->
+                        <li>
+                            <a href="#">Community <i class="fas fa-caret-right"></i></a>
+
+                            <div class="dropdown-menu-1">
+                                <ul>
+                                    <li><a href="#">Event</a></li>
+                                    <li><a href="#">Discussion</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li><a href="#">Profile</a>
+            </li>
+            <li><a href="#">Contact us</a></li>
+        </ul>
+    </div>
+
+    <div class="container">
+
+        <input id="page_filter_id" type="text" value="" placeholder="Filter">
+        <select id="spinner_list_id">
+            <option value="Id">Id</option>
+            <option value="Name">Name</option>
+            <option value="Min Price">Min Price</option>
+            <option value="Max Price">Max Price</option>
+        </select>
+        <button onclick="goToPageWithFilter()">Go</button>
+
+        <!-- <table id="service_table"> -->
+        <div class="card-container" id="service_cards">
+
+        </div>
+
+        </table>
+        <div id="pageable_div_id"></div>
+
+        <input id="page_number_id" type="number" value="1" placeholder="Go to page">
+        <button onclick="goToPage()">Go</button>
+
+    </div>
+
+    <script>
+        var pageSize = 10;
+        var urlParams = new URLSearchParams(window.location.search);
+        var userId = urlParams.get('id');
+
+        getServices(0, userId);
+
+        function displayPageable(pageNumber, totalElement, totalPages) {
+            totalPages -= 1;
+            var previousButtonStatus = "";
+            var nextButtonStatus = "";
+
+            previousPage = pageNumber - 1;
+            if (previousPage < 0) {
+                previousButtonStatus = "disabled";
+                previousPage = 0;
+            }
+            nextPage = pageNumber + 1;
+            if (nextPage > totalPages) {
+                nextButtonStatus = "disabled";
+                nextPage = totalPages;
+            }
+            var html = '<button id="previous_button_id" onclick="getServices(previousPage)" ' + previousButtonStatus + '>Previous</button><button onclick="getServices(nextPage)" ' + nextButtonStatus + '>Next</button>' +
+                '<br><span>' + 'Page ' + (pageNumber + 1) + ' of ' + (totalPages + 1) + '</span>';
+            document.getElementById("pageable_div_id").innerHTML = html;
+        }
+
+
+        function redirectToOrderServicePage() {
+            const userId = document.getElementById('id').innerText;
+            window.location.href = `orderservice.html?uid=${userId}`;
+        }
+
+        function getServices(page) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('uid');
+            var inputPageElement = document.getElementById("page_number_id");
+            var filter = document.getElementById("page_filter_id").value;
+            var type = document.getElementById("spinner_list_id").value;
+            var pageNum = inputPageElement.value;
+            if (page == null) {
+                page = pageNum - 1;
+            }
+
+            // Get User Id from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const uid = urlParams.get('uid');
+
+            var link = "";
+            if (filter !== "") {
+                if (type === "Min Price") {
+                    type = "price"
+                    var priceType = "min"
+                }
+                if (type === "Max Price") {
+                    type = "price"
+                    var priceType = "max"
+                }
+                link = "http://localhost:8080/api/service?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + page + "&priceType=" + priceType;
+            } else {
+                link = "http://localhost:8080/api/service?page=" + page
+            }
+
+            $.get(link, function (data, status) {
+                console.log(data);
+                var html = '';
+                for (var i = 0; i < data.services.length; i++) {
+                    // Only add to html if the uid matches
+                    if (data.services[i].uid == uid) {
+                        html += '<div class="card">\n' +
+                            '  <div class="card-content">\n' +
+                            '    <img src="./images/ruby.png" alt="Service Image" class="card-image">\n' +
+                            '    <h2 class="card-id">' + "id: " + data.services[i].id + '</h2>\n' +
+                            '    <p class="card-uid">' + "uid: " + data.services[i].uid + '</p>\n' +
+                            '    <h3 class="card-name">' + data.services[i].name + '</h3>\n' +
+                            '    <p class="card-price">' + "price: " + data.services[i].price + '</p>\n' +
+                            '    <a href="' + data.services[i].infoLink + '" class="info-button more-info" data-id="' + data.services[i].id + '">More Info</a>\n' +
+                            '  </div>\n' +
+                            '</div>';
+                    }
+                }
+                document.getElementById("service_cards").innerHTML = html;
+
+                document.querySelectorAll('.more-info').forEach(item => {
+                    item.addEventListener('click', event => {
+                        // Prevent default navigation
+                        event.preventDefault();
+
+                        // Get service id from data-id attribute
+                        let serviceId = event.target.getAttribute('data-id');
+
+                        // Navigate to serviceDetail.html page with the serviceId as a URL parameter
+                        window.location.href = `serviceDetail.html?id=${serviceId}`;
+                    })
+                });
+
+                displayPageable(data.currentPage, data.totalItems, data.totalPages);
+                inputPageElement.value = "";
+            });
+        }
+
+    </script>
+</body>
+
+</html>
