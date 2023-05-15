@@ -5,9 +5,10 @@ let user = JSON.parse(localStorage.getItem('user'));
 
 let userID = user.id;
 
+
 function orderService() {
   // Get the user id. This depends on how the user id is displayed on your page.
-  var uid = document.getElementById('uid').textContent; // replace 'uid' with the actual id of the element containing the user id
+  var uid = document.getElementById('id').innerText;
   window.location.href = 'orderservice.html?uid=' + uid;
 }
 
@@ -25,7 +26,7 @@ fetch(`http://localhost:8080/api/users/${userId}`)
     document.getElementById('name').innerText = data.username;
     document.getElementById('email').innerText = data.email;
     document.getElementById('description').innerText = data.bio;
-
+    document.getElementById('orderService').href += data.id;
 
   });
 document.querySelector('#profilePictureInput').addEventListener('change', (event) => {
