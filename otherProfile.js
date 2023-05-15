@@ -28,6 +28,7 @@ fetch(`http://localhost:8080/api/users/${userId}`)
 
 
   });
+
 document.querySelector('#profilePictureInput').addEventListener('change', (event) => {
   // Get the selected file
   let file = event.target.files[0];
