@@ -6,6 +6,7 @@
     <title>Service</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" href="orderservice.css">
+    <script src="orderservice.js" defer></script>
 </head>
 <style>
     table {
@@ -81,12 +82,16 @@
         <input id="page_number_id" type="number" value="1" placeholder="Go to page">
         <button onclick="goToPage()">Go</button>
 
+        <div id="main-content"></div>
+
     </div>
 
     <script>
         var pageSize = 10;
         var urlParams = new URLSearchParams(window.location.search);
         var userId = urlParams.get('id');
+
+        
 
         getServices(0, userId);
 
@@ -123,13 +128,10 @@
             var filter = document.getElementById("page_filter_id").value;
             var type = document.getElementById("spinner_list_id").value;
             var pageNum = inputPageElement.value;
+
             if (page == null) {
                 page = pageNum - 1;
             }
-
-            // Get User Id from URL parameters
-            const urlParams = new URLSearchParams(window.location.search);
-            const uid = urlParams.get('uid');
 
             var link = "";
             if (filter !== "") {
