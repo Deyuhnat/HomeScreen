@@ -1,36 +1,20 @@
-var pageSize = 10;
-        function displayPageable(pageNumber, totalElement, totalPages) {
-            totalPages -= 1;
-            var previousButtonStatus = "";
-            var nextButtonStatus = "";
 
-            previousPage = pageNumber - 1;
-            if (previousPage < 0) {
-                previousButtonStatus = "disabled";
-                previousPage = 0;
-            }
-            nextPage = pageNumber + 1;
-            if (nextPage > totalPages) {
-                nextButtonStatus = "disabled";
-                nextPage = totalPages;
-            }
-            var html = '<button id="previous_button_id" onclick="getServices(previousPage)" ' + previousButtonStatus + '>Previous</button><button onclick="getServices(nextPage)" ' + nextButtonStatus + '>Next</button>' +
-                '<br><span>' + 'Page ' + (pageNumber + 1) + ' of ' + (totalPages + 1) + '</span>';
-            document.getElementById("pageable_div_id").innerHTML = html;
-        }
         console.log("HelloWorld")
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id');
 
-        async function fetchData() {
-            const res = await fetch("http://localhost:8080/api/service")
-            return await res.json()
-        }
-
-        fetchData().then(data => {
+        
+        fetch(`http://localhost:8080/api/service/uid/${userId}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Failed to fetch user details');
+          }
+          return response.json();
+        }).then(data => {
             console.log(data)
-            const urlParams = new URLSearchParams(window.location.search);
-            const userId = urlParams.get('id');
+           
             console.log(userId)
-            var filteredData = data.services.filter(service => service.uid === parseInt(userId));
+            var filteredData = data;
             console.log(filteredData);
             var html = '';
             filteredData.forEach(service=>{
@@ -47,4 +31,20 @@ var pageSize = 10;
             })
             
             document.getElementById("service_cards").innerHTML = html;
+            
+            document.querySelectorAll('.more-info').forEach(item => {
+                item.addEventListener('click', event => {
+                  // Prevent default navigation
+                  event.preventDefault();
+      
+                  // Get service id from data-id attribute
+                  let serviceId = event.target.getAttribute('data-id');
+      
+                  // Navigate to serviceDetail.html page with the serviceId as a URL parameter
+                  window.location.href = `serviceDetail.html?id=${serviceId}`;
+                })
+              });
+      
         })
+
+        
