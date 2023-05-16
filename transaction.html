@@ -159,7 +159,7 @@
 
       for (var i = 0; i< data.length; i++) {
         if (type === 'buyer') {
-          var deleteUrl = 'api/transaction/' + data[i].id + '/delete';
+          var deleteUrl = 'http://localhost:8080/'+'api/transaction/' + data[i].id + '/delete';
           tableDetail = '    <tr>\n' +
                   '        <td>' + data[i].id + '</td>\n' +
                   '        <td>' + data[i].uid + '</td>\n' +
@@ -175,7 +175,7 @@
 
         if (type === 'seller') {
           var editID = 'edit' + data[i].id
-          var editUrl = 'api/transaction/' + data[i].id + '/edit';
+          var editUrl = 'http://localhost:8080/'+'api/transaction/' + data[i].id + '/edit';
 
           tableDetail = '    <tr>\n' +
                   '        <td id="id' + data[i].id + '">' + data[i].id + '</td>\n' +
