@@ -203,9 +203,16 @@
 
             // Get service id from data-id attribute
             let userId = event.target.getAttribute('data-id');
-
-            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
-            window.location.href = `otherProfile.html?id=${userId}`;
+            let user = JSON.parse(localStorage.getItem('user'));
+            console.log(user.id);
+            console.log(userId);
+            if (userId == user.id) {
+              // Redirect to the user's own profile page
+              window.location.href = "userprofile.html";
+            } else {
+              // Redirect to the otherProfile.html page with the user ID in the URL parameters
+              window.location.href = `otherProfile.html?id=${userId}`;
+            }
           })
         });
 
@@ -253,9 +260,16 @@
 
             // Get service id from data-id attribute
             let userId = event.target.getAttribute('data-id');
-
-            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
-            window.location.href = `otherProfile.html?id=${userId}`;
+            let user = JSON.parse(localStorage.getItem('user'));
+            console.log(user.id);
+            console.log(userId);
+            if (userId == user.id) {
+              // Redirect to the user's own profile page
+              window.location.href = "userprofile.html";
+            } else {
+              // Redirect to the otherProfile.html page with the user ID in the URL parameters
+              window.location.href = `otherProfile.html?id=${userId}`;
+            }
           })
         });
 
