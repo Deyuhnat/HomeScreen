@@ -21,7 +21,7 @@ var pageSize = 10;
         console.log("HelloWorld")
 
         async function fetchData() {
-            const res = await fetch("http://localhost:8080/api/service")
+            const res = await fetch("http://localhost:8080/api/service/uid/")
             return await res.json()
         }
 

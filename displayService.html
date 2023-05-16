@@ -4,9 +4,48 @@
 <head>
     <title>Display All Services</title>
     <link rel="stylesheet" type="text/css" href="displayServiceStyle.css">
+    <style>
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        #create-service-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #create-service-btn:hover {
+            background-color: #45a049;
+        }
+
+        #back-btn {
+            background-color: #1d7cf8;
+            color: white;
+        }
+
+        #back-btn:hover {
+            background-color: #da190b;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="button-container">
+        <a href="userprofile.html" id="back-btn" class="button">Back</a>
+        <a href="createService.html" id="create-service-btn" class="button">Create Service</a>
+    </div>
     <h2>Display All Services</h2>
     <table id="services-table">
         <thead>
