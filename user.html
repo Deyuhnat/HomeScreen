@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>User</title>
@@ -13,7 +14,8 @@
     width: 100%;
   }
 
-  td, th {
+  td,
+  th {
     border: 1px solid #dddddd;
     text-align: left;
     padding: 8px;
@@ -23,6 +25,7 @@
     background-color: #dddddd;
   }
 </style>
+
 <body>
 
   <div class="menu-bar">
@@ -31,127 +34,169 @@
       <li><a href="Home.html">Home</a></li>
       <li><a href="service.html">Service</a></li>
       <li><a href="user.html">User</a></li>
-      <li><a href="#">Pages <i class="fas fa-caret-down"></i></a>
-          <div class="dropdown-menu">
-              <ul>
-                <!-- <li><a href="#">""</a></li> -->
-                <li>
-                  <a href="#">Community <i class="fas fa-caret-right"></i></a>
-                  
-                  <div class="dropdown-menu-1">
-                    <ul>
-                      <li><a href="#">Event</a></li>
-                      <li><a href="#">Discussion</a></li>
-                      <li><a href="#">Blog</a></li>
-                    </ul>
-                  </div>
-                </li>
-                <li><a href="#">FAQ</a></li>
-              </ul>
-            </div>
+      <li><a href="userprofile.html">Profile</a>
       </li>
-      <li><a href="#">Profile</a>
-      </li>
-      <li><a href="#">Contact us</a></li>
     </ul>
   </div>
 
   <div class="container">
-<input id="page_filter_id" type="text" value="" placeholder="Filter">
-<select id="spinner_list_id">
-  <option value="Id">Id</option>
-  <option value="Name">Name</option>
-</select>
-<button onclick="goToPageWithFilter()">Go</button>
+    <input id="page_filter_id" type="text" value="" placeholder="Filter">
+    <select id="spinner_list_id">
+      <option value="Id">Id</option>
+      <option value="Name">Name</option>
+    </select>
+    <button onclick="goToPageWithFilter()">Go</button>
 
-  <div class="card-container" id="users_cards"></div>
+    <div class="card-container" id="users_cards"></div>
 
-</table>
-<div id="pageable_div_id"></div>
+    </table>
+    <div id="pageable_div_id"></div>
 
-<input id="page_number_id" type="number" value="1" placeholder="Go to page">
-<button onclick="goToPage()">Go</button>
+    <input id="page_number_id" type="number" value="1" placeholder="Go to page">
+    <button onclick="goToPage()">Go</button>
 
-</div>
+  </div>
 
-<script>
-  var pageSize = 10;
-  var previousPage, nextPage
-  getUsers();
+  <script>
+    var pageSize = 10;
+    var previousPage, nextPage
+    getUsers();
 
-  function displayPageable(pageNumber, totalElement, totalPages) {
-    totalPages -= 1;
-    var previousButtonStatus = "";
-    var nextButtonStatus = "";
+    function displayPageable(pageNumber, totalElement, totalPages) {
+      totalPages -= 1;
+      var previousButtonStatus = "";
+      var nextButtonStatus = "";
 
-    previousPage = pageNumber -1;
-    if (previousPage < 0) {
-      previousButtonStatus = "disabled";
-      previousPage = 0;
-    }
-    nextPage = pageNumber + 1;
-    if (nextPage > totalPages) {
-      nextButtonStatus = "disabled";
-      nextPage = totalPages;
-    }
-    var html = '<button id="previous_button_id" onclick="getUsers(previousPage)" ' + previousButtonStatus + '>Previous</button><button onclick="getUsers(nextPage)" ' + nextButtonStatus + '>Next</button>' +
-            '<br><span>'+ 'Page ' + (pageNumber+1) +' of ' + (totalPages+1) + '</span>';
-    document.getElementById("pageable_div_id").innerHTML = html;
-  }
-
-  function getUsers(page) {
-    var inputPageElement = document.getElementById("page_number_id");
-    var filter = document.getElementById("page_filter_id").value;
-    var type = document.getElementById("spinner_list_id").value;
-    var pageNum = inputPageElement.value;
-    if (page == null) {
-      page = pageNum - 1;
-    }
-    var link ="";
-    if (filter !== "") {
-
-      link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + page;
-    }
-    else {
-      link = "http://localhost:8080/api/users?page=" + page
-    }
-    $.get(link, function(data, status){
-      console.log(data);
-      var html = '';
-  //     var allUsers = [];
-  //             for (var i = 0; i < data.users.length; i++) {
-
-  //               var userObject = {
-  //     id: data.users[i].id,
-  //     username: data.users[i].username,
-  //     email: data.users[i].email,
-  //     description: data.users[i].bio
-  //   };
-  //   allUsers.push(userObject);
-  // }
-  //   localStorage.setItem('users', JSON.stringify(allUsers));
-
-  //   // Convert the object to a JSON string
-  //   var userJSON = JSON.stringify(allUsers);
-
-
-      
-
-for (var i = 0; i < data.users.length; i++) {
-        html += '<div class="card">\n' +
-          '  <div class="card-content">\n' +
-          '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
-          '    <h3 class="card-username">' + data.users[i].username + '</h3>\n' +
-          '    <p class="card-email">' + data.users[i].email + '</p>\n' +
-          // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
-          '  </div>\n' +
-          '</div>';
+      previousPage = pageNumber - 1;
+      if (previousPage < 0) {
+        previousButtonStatus = "disabled";
+        previousPage = 0;
       }
-      document.getElementById("users_cards").innerHTML = html;
+      nextPage = pageNumber + 1;
+      if (nextPage > totalPages) {
+        nextButtonStatus = "disabled";
+        nextPage = totalPages;
+      }
+      var html = '<button id="previous_button_id" onclick="getUsers(previousPage)" ' + previousButtonStatus + '>Previous</button><button onclick="getUsers(nextPage)" ' + nextButtonStatus + '>Next</button>' +
+        '<br><span>' + 'Page ' + (pageNumber + 1) + ' of ' + (totalPages + 1) + '</span>';
+      document.getElementById("pageable_div_id").innerHTML = html;
+    }
 
-      // check for button more info
-      document.querySelectorAll('.more-info').forEach(item => {
+    function getUsers(page) {
+      var inputPageElement = document.getElementById("page_number_id");
+      var filter = document.getElementById("page_filter_id").value;
+      var type = document.getElementById("spinner_list_id").value;
+      var pageNum = inputPageElement.value;
+      if (page == null) {
+        page = pageNum - 1;
+      }
+      var link = "";
+      if (filter !== "") {
+
+        link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + page;
+      }
+      else {
+        link = "http://localhost:8080/api/users?page=" + page
+      }
+      $.get(link, function (data, status) {
+        console.log(data);
+        var html = '';
+        //     var allUsers = [];
+        //             for (var i = 0; i < data.users.length; i++) {
+
+        //               var userObject = {
+        //     id: data.users[i].id,
+        //     username: data.users[i].username,
+        //     email: data.users[i].email,
+        //     description: data.users[i].bio
+        //   };
+        //   allUsers.push(userObject);
+        // }
+        //   localStorage.setItem('users', JSON.stringify(allUsers));
+
+        //   // Convert the object to a JSON string
+        //   var userJSON = JSON.stringify(allUsers);
+
+
+
+
+        for (var i = 0; i < data.users.length; i++) {
+          html += '<div class="card">\n' +
+            '  <div class="card-content">\n' +
+            '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
+            '    <h3 class="card-username">' + data.users[i].username + '</h3>\n' +
+            '    <p class="card-email">' + data.users[i].email + '</p>\n' +
+            // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
+            '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
+            '  </div>\n' +
+            '</div>';
+        }
+        document.getElementById("users_cards").innerHTML = html;
+
+        // check for button more info
+        document.querySelectorAll('.more-info').forEach(item => {
+          item.addEventListener('click', event => {
+            // Prevent default navigation
+            event.preventDefault();
+
+            // Get service id from data-id attribute
+            let userId = event.target.getAttribute('data-id');
+            let user = JSON.parse(localStorage.getItem('user'));
+            console.log(user.id);
+            console.log(userId);
+            if (userId == user.id) {
+              // Redirect to the user's own profile page
+              window.location.href = "userprofile.html";
+            } else {
+              // Redirect to the otherProfile.html page with the user ID in the URL parameters
+              window.location.href = `otherProfile.html?id=${userId}`;
+            }
+            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
+            //window.location.href = `otherProfile.html?id=${userId}`;
+          })
+        });
+
+        displayPageable(data.currentPage, data.totalItems, data.totalPages);
+        inputPageElement.value = "";
+      });
+    }
+
+    function goToPage() {
+      var pageNum = document.getElementById("page_number_id").value - 1;
+      var filter = document.getElementById("page_filter_id").value;
+      var type = document.getElementById("spinner_list_id").value;
+      if (pageNum < 0) {
+        pageNum = 0;
+      }
+      var link = "";
+      if (filter !== "") {
+        link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
+      }
+      else {
+        link = "http://localhost:8080/api/users?page=" + pageNum;
+      }
+      // if (page == null) {
+      //     page = pageNum;
+      // }
+      $.get(link, function (data, status) {
+        console.log(data);
+        var html = '';
+
+        for (var i = 0; i < data.users.length; i++) {
+          html += '<div class="card">\n' +
+            '  <div class="card-content">\n' +
+            '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
+            '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
+            '    <p class="card-price">' + data.users[i].email + '</p>\n' +
+            // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
+            '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
+            '  </div>\n' +
+            '</div>';
+        }
+        document.getElementById("users_cards").innerHTML = html;
+
+        // check for button more info
+        document.querySelectorAll('.more-info').forEach(item => {
           item.addEventListener('click', event => {
             // Prevent default navigation
             event.preventDefault();
@@ -164,47 +209,44 @@ for (var i = 0; i < data.users.length; i++) {
           })
         });
 
-      displayPageable(data.currentPage, data.totalItems, data.totalPages);
-      inputPageElement.value = "";
-    });
-  }
+        displayPageable(data.currentPage, data.totalItems, data.totalPages);
+      });
+    }
 
-  function goToPage() {
-    var pageNum = document.getElementById("page_number_id").value - 1;
-    var filter = document.getElementById("page_filter_id").value;
-    var type = document.getElementById("spinner_list_id").value;
-    if (pageNum < 0) {
-      pageNum = 0;
-    }
-    var link ="";
-    if (filter !== "") {
-      link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
-    }
-    else {
-      link = "http://localhost:8080/api/users?page=" + pageNum;
-    }
-    // if (page == null) {
-    //     page = pageNum;
-    // }
-    $.get(link, function(data, status){
-      console.log(data);
-      var html = '';
-
-              for (var i = 0; i < data.users.length; i++) {
-        html += '<div class="card">\n' +
-          '  <div class="card-content">\n' +
-          '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
-          '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
-          '    <p class="card-price">' + data.users[i].email + '</p>\n' +
-          // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
-          '  </div>\n' +
-          '</div>';
+    function goToPageWithFilter() {
+      var pageNum = document.getElementById("page_number_id").value;
+      var filter = document.getElementById("page_filter_id").value;
+      var type = document.getElementById("spinner_list_id").value;
+      if (pageNum < 0) {
+        pageNum = 0;
       }
-      document.getElementById("users_cards").innerHTML = html;
+      var link = "";
+      if (filter !== "") {
+        link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
+        console.log(link);
+      }
+      else {
+        link = "http://localhost:8080/api/users?page=0"
+      }
+      $.get(link, function (data, status) {
+        console.log(data);
+        var html = '';
 
-     // check for button more info
-     document.querySelectorAll('.more-info').forEach(item => {
+        for (var i = 0; i < data.users.length; i++) {
+          html += '<div class="card">\n' +
+            '  <div class="card-content">\n' +
+            '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
+            '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
+            '    <p class="card-price">' + data.users[i].email + '</p>\n' +
+            // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
+            '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
+            '  </div>\n' +
+            '</div>';
+        }
+        document.getElementById("users_cards").innerHTML = html;
+
+        // check for button more info
+        document.querySelectorAll('.more-info').forEach(item => {
           item.addEventListener('click', event => {
             // Prevent default navigation
             event.preventDefault();
@@ -216,61 +258,12 @@ for (var i = 0; i < data.users.length; i++) {
             window.location.href = `otherProfile.html?id=${userId}`;
           })
         });
-      
-      displayPageable(data.currentPage, data.totalItems, data.totalPages);
-    });
-  }
 
-  function goToPageWithFilter() {
-    var pageNum = document.getElementById("page_number_id").value ;
-    var filter = document.getElementById("page_filter_id").value;
-    var type = document.getElementById("spinner_list_id").value;
-    if (pageNum < 0) {
-      pageNum = 0;
+
+        displayPageable(data.currentPage, data.totalItems, data.totalPages);
+      });
     }
-    var link ="";
-    if (filter !== "") {
-      link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
-      console.log(link);
-    }
-    else {
-      link = "http://localhost:8080/api/users?page=0"
-    }
-    $.get(link, function(data, status){
-      console.log(data);
-      var html = '';
-
-              for (var i = 0; i < data.users.length; i++) {
-        html += '<div class="card">\n' +
-          '  <div class="card-content">\n' +
-          '    <h2 class="card-id">' + data.users[i].id + '</h2>\n' +
-          '    <h3 class="card-name">' + data.users[i].username + '</h3>\n' +
-          '    <p class="card-price">' + data.users[i].email + '</p>\n' +
-          // '    <p class="card-description">' + data.users[i].bio + '</p>\n' +
-          '    <a href="' + data.users[i].infoLink + '" class="info-button more-info" data-id="' + data.users[i].id + '">More Info</a>\n' +
-          '  </div>\n' +
-          '</div>';
-      }
-      document.getElementById("users_cards").innerHTML = html;
-
-       // check for button more info
-     document.querySelectorAll('.more-info').forEach(item => {
-          item.addEventListener('click', event => {
-            // Prevent default navigation
-            event.preventDefault();
-
-            // Get service id from data-id attribute
-            let userId = event.target.getAttribute('data-id');
-
-            // Navigate to serviceDetail.html page with the serviceId as a URL parameter
-            window.location.href = `otherProfile.html?id=${userId}`;
-          })
-        });
-      
-
-      displayPageable(data.currentPage, data.totalItems, data.totalPages);
-    });
-  }
-</script>
+  </script>
 </body>
+
 </html>
