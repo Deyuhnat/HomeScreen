@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<style>
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+
+</style>
+<body>
+
+<table id="transaction_table">
+
+</table>
+
+<script>
+  var defaultOtherUserID = localStorage.getItem("otherUserID");
+
+  getTransactionOfOtherUser();
+
+  function getTransactionOfOtherUser() {
+    var link = "http://localhost:8080/api/transaction"
+
+    $.get(link, function(data, status){
+      console.log(data);
+      var html = '    <tr>\n' +
+              '        <th>ID</th>\n' +
+              '        <th>UID</th>\n' +
+              '        <th>SID</th>\n' +
+              '        <th>Name</th>\n' +
+              '        <th>Status</th>\n' +
+              '        <th></th>\n' +
+              '    </tr>';
+
+      var tableDetail = '';
+
+      for (var i = 0; i< data.length; i++) {
+        tableDetail = '    <tr>\n' +
+                '        <td>' + data[i].id + '</td>\n' +
+                '        <td>' + data[i].uid + '</td>\n' +
+                '        <td>' + data[i].sid + '</td>\n' +
+                '        <td>' + data[i].name + '</td>\n' +
+                '        <td>' + data[i].status + '</td>\n' +
+                '    </tr>';
+
+        if (data[i].uid != defaultOtherUserID) {
+          continue;
+        }
+        html = html + tableDetail;
+      }
+      document.getElementById("transaction_table").innerHTML = html;
+    });
+  }
+</script>
+</body>
+</html>

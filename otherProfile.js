@@ -5,7 +5,6 @@ let user = JSON.parse(localStorage.getItem('user'));
 
 let userID = user.id;
 
-
 function orderService() {
   // Get the user id. This depends on how the user id is displayed on your page.
   var uid = document.getElementById('id').innerText;
@@ -21,7 +20,7 @@ fetch(`http://localhost:8080/api/users/${userId}`)
   })
   .then(data => {
 
-
+    savedOtherUserID(data.id);
     document.getElementById('id').innerText = data.id;
     document.getElementById('name').innerText = data.username;
     document.getElementById('email').innerText = data.email;
@@ -29,6 +28,7 @@ fetch(`http://localhost:8080/api/users/${userId}`)
     document.getElementById('orderService').href += data.id;
 
   });
+
 document.querySelector('#profilePictureInput').addEventListener('change', (event) => {
   // Get the selected file
   let file = event.target.files[0];
@@ -60,3 +60,7 @@ window.addEventListener('load', () => {
     document.querySelector('img').src = dataURL;
   }
 })
+
+function savedOtherUserID(id) {
+  localStorage.setItem("otherUserID", id);
+}
