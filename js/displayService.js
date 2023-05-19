@@ -1,6 +1,6 @@
 async function fetchServicesByUid(uid) {
     try {
-        const response = await fetch(`http://localhost:8080/api/service/uid/${uid}`);
+        const response = await fetch(`http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/service/uid/${uid}`);
         if (response.ok) {
             return await response.json();
         } else {
@@ -63,7 +63,7 @@ async function displayServices() {
 
 async function deleteService(id) {
     try {
-        const response = await fetch(`http://localhost:8080/api/service/${id}`, {
+        const response = await fetch(`http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/service/${id}`, {
             method: 'DELETE',
         });
 
@@ -153,7 +153,7 @@ function editService(service) {
         };
 
         try {
-            const response = await fetch(`http://localhost:8080/api/service/${service.id}`, {
+            const response = await fetch(`http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/service/${service.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

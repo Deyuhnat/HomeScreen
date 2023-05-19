@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8080/api'; // Add your backend base URL here
+const BASE_URL = 'http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api'; // Add your backend base URL here
 
 const saveBtn = document.getElementById('savebtn');
 const usernameInput = document.getElementById('username');

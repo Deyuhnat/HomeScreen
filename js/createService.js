@@ -27,7 +27,7 @@ document.getElementById('create-service-form').addEventListener('submit', functi
 
 async function createService(service) {
     try {
-        const response = await fetch('http://localhost:8080/api/service', {
+        const response = await fetch('http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/service', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

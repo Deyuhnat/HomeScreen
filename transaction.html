@@ -141,7 +141,7 @@
   var editURL;
 
   function getTransaction(type) {
-    var link = "http://localhost:8080/api/transaction"
+    var link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/transaction"
 
     $.get(link, function(data, status){
       console.log(data);
@@ -158,7 +158,7 @@
 
       for (var i = 0; i< data.length; i++) {
         if (type === 'buyer') {
-          var deleteUrl = 'http://localhost:8080/'+'api/transaction/' + data[i].id + '/delete';
+          var deleteUrl = 'http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/'+'api/transaction/' + data[i].id + '/delete';
           tableDetail = '    <tr>\n' +
                   '        <td>' + data[i].id + '</td>\n' +
                   '        <td>' + data[i].uid + '</td>\n' +
@@ -174,7 +174,7 @@
 
         if (type === 'seller') {
           var editID = 'edit' + data[i].id
-          var editUrl = 'http://localhost:8080/'+'api/transaction/' + data[i].id + '/edit';
+          var editUrl = 'http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/'+'api/transaction/' + data[i].id + '/edit';
 
           tableDetail = '    <tr>\n' +
                   '        <td id="id' + data[i].id + '">' + data[i].id + '</td>\n' +
@@ -195,7 +195,7 @@
   }
 
   function getTransactionOfOtherUser() {
-    var link = "http://localhost:8080/api/transaction"
+    var link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/transaction"
 
     $.get(link, function(data, status){
       console.log(data);

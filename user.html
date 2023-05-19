@@ -93,10 +93,10 @@
       var link = "";
       if (filter !== "") {
 
-        link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + page;
+        link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + page;
       }
       else {
-        link = "http://localhost:8080/api/users?page=" + page
+        link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/users?page=" + page
       }
       $.get(link, function (data, status) {
         console.log(data);
@@ -170,10 +170,10 @@
       }
       var link = "";
       if (filter !== "") {
-        link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
+        link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
       }
       else {
-        link = "http://localhost:8080/api/users?page=" + pageNum;
+        link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/users?page=" + pageNum;
       }
       // if (page == null) {
       //     page = pageNum;
@@ -229,11 +229,11 @@
       }
       var link = "";
       if (filter !== "") {
-        link = "http://localhost:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
+        link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/users?name=" + filter + "&type=" + type.toLowerCase() + "&page=" + pageNum;
         console.log(link);
       }
       else {
-        link = "http://localhost:8080/api/users?page=0"
+        link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/users?page=0"
       }
       $.get(link, function (data, status) {
         console.log(data);

@@ -14,7 +14,7 @@ async function handleLogin(event) {
     const password = document.querySelector('#logPassword').value;
 
     try {
-        const response = await fetch('http://localhost:8080/api/userLogin', {
+        const response = await fetch('http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/userLogin', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -41,7 +41,7 @@ async function handleLogin(event) {
 //Check username exist function
 async function isUsernameExists(username) {
     try {
-        const response = await fetch(`http://localhost:8080/api/userExist?username=${username}`);
+        const response = await fetch(`http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/userExist?username=${username}`);
 
         if (response.ok) {
             const data = await response.json();
@@ -83,7 +83,7 @@ async function handleRegister(event) {
     }
 
     try {
-        const response = await fetch('http://localhost:8080/api/users', {
+        const response = await fetch('http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

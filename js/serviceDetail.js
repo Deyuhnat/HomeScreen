@@ -8,7 +8,7 @@ console.log(user.id);
 let userID = user.id;
 
 // Make a GET request to fetch the service details
-fetch(`http://localhost:8080/api/service/${serviceId}`)
+fetch(`http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/service/${serviceId}`)
   .then(response => {
     if (!response.ok) {
       throw new Error('Failed to fetch service details');
@@ -44,7 +44,7 @@ fetch(`http://localhost:8080/api/service/${serviceId}`)
         };
 
         // Make a POST request to create a new transaction
-        fetch('http://localhost:8080/api/transaction', {
+        fetch('http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/transaction', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

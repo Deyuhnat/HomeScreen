@@ -11,7 +11,7 @@ function orderService() {
   window.location.href = 'orderservice.html?uid=' + uid;
 }
 
-fetch(`http://localhost:8080/api/users/${userId}`)
+fetch(`http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/users/${userId}`)
   .then(response => {
     if (!response.ok) {
       throw new Error('Failed to fetch user details');
