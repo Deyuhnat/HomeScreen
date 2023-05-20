@@ -1,96 +1,46 @@
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-
-#backButton,
-.viewTableButton {
-    background: linear-gradient(90deg, #1c87c9, #2371a0);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-#backButton:hover,
-.viewTableButton:hover {
-    background: #2371a0;
-    color: white;
-}
-
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
-
-td,
-th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-
 body {
-    min-height: 100vh; /* make sure the body is at least as tall as the viewport */
+    margin: 0;
+    padding: 0;
     background: linear-gradient(45deg, lightblue, blueviolet);
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;  /* This change aligns the container to the top */
+    justify-content: center;
 }
 
-.viewTableButton {
-    background: linear-gradient(90deg, #1c87c9, #2371a0);
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-.viewTableButton:hover {
-    background: #2371a0;
-    color: white;
+.container {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 10px 20px 0px rgba(0,0,0,0.10);
+    max-width: 960px;  /* This limits the width of the table container */
+    width: 100%;  /* This ensures the container takes up to 100% of the width of the viewport */
+    margin-top: 20px; /* Added some margin at the top */
 }
 
 table {
-    font-family: arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     border-collapse: collapse;
     width: 100%;
+    color: #333;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
 }
 
 td, th {
     border: 1px solid #dddddd;
     text-align: left;
-    padding: 8px;
+    padding: 12px;
 }
 
 tr:nth-child(even) {
-    background-color: #dddddd;
+    background-color: #e6e6e6;
+}
+
+tr:hover {
+    background-color: #ddd;
 }
