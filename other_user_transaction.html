@@ -4,27 +4,12 @@
   <meta charset="UTF-8">
   <title>User</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="./css/other_user_transaction.css">
 </head>
-<style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-
-
-</style>
 <body>
+
+<button class="viewTableButton" onclick="getTransactionOfOtherUser('buyer')">View table as Buyer</button>
+<button class="viewTableButton" onclick="getTransactionOfOtherUser('seller')">View table as Seller</button>
 
 <table id="transaction_table">
 
@@ -35,7 +20,7 @@
 
   getTransactionOfOtherUser();
 
-  function getTransactionOfOtherUser() {
+  function getTransactionOfOtherUser(role) {
     var link = "http://ec2-52-13-116-128.us-west-2.compute.amazonaws.com:8080/api/transaction"
 
     $.get(link, function(data, status){
@@ -60,7 +45,9 @@
                 '        <td>' + data[i].status + '</td>\n' +
                 '    </tr>';
 
-        if (data[i].sid != defaultOtherUserID) {
+        if (role == 'buyer' && data[i].uid != defaultOtherUserID) {
+          continue;
+        } else if (role == 'seller' && data[i].sid != defaultOtherUserID) {
           continue;
         }
         html = html + tableDetail;
